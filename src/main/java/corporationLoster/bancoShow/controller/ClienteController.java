@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/CLiente/v1")
+@RequestMapping(value = "/cliente/v1")
 public class ClienteController {
     @Autowired
     private ClienteRepository clienteRepository;
@@ -26,7 +26,7 @@ public class ClienteController {
     @ResponseBody
     public Cliente create(@RequestBody Cliente cliente){
         Cliente clienteSocializado = calcs.calc(cliente);
-        Cliente clienteSaved = clienteRepository.save(cliente);
+        Cliente clienteSaved = clienteRepository.save(clienteSocializado);
         return clienteSaved;
     }
     @GetMapping("{id}")
@@ -55,7 +55,7 @@ public class ClienteController {
 
     }
     @PutMapping(value = "update/id")
-    public String updateClienteById(@PathVariable Long id, String novoNome){
+    public String updateClienteById(@PathVariable Long id,@RequestBody String novoNome){
         Optional<Cliente> clienteOptional = clienteRepository.findById(id);
         if(clienteOptional.isPresent()){
             Cliente c = clienteOptional.get();
